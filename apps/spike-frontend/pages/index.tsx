@@ -7,7 +7,8 @@ import {
   QueryClientProvider,
 } from 'react-query';
 import { request, gql } from 'graphql-request';
-import { DataGrid, ColDef, ValueGetterParams, ValueFormatterParams } from '@material-ui/data-grid';
+import { DataGrid, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
+import Button from '@material-ui/core/Button';
 
 const endpoint = 'https://one-as-spikebe-d01.azurewebsites.net/graphql';
 
@@ -17,55 +18,55 @@ const StyledPage = styled.div`
 `;
 
 function useHumans() {
-  // return useQuery('humans', async () => {
-  //   const {
-  //     humans,
-  //   } = await request(
-  //     endpoint,
-  //     gql`
-  //       query {
-  //         humans {
-  //           name
-  //           appearsIn
-  //           id
-  //           homePlanet
-  //           friends {
-  //             name
-  //           }
-  //         }
-  //       }
-  //     `
-  //     );
-  //   return humans;
-  // });
-  return {
-    status: 'success',
-    data: [
-      {
-        name: 'Luke',
-        appearsIn: ['NEWHOPE', 'EMPIRE', 'JEDI'],
-        id: '1',
-        homePlanet: 'Tatooine',
-        friends: [
-          {
-            name: 'R2-D2',
-          },
-          {
-            name: 'C-3PO',
-          },
-        ],
-      },
-      {
-        name: 'Vader',
-        appearsIn: ['NEWHOPE', 'EMPIRE', 'JEDI'],
-        id: '2',
-        homePlanet: 'Tatooine',
-        friends: [],
-      },
-    ],
-    error: null,
-    isFetching: false
-  };
+  return useQuery('humans', async () => {
+    const {
+      humans,
+    } = await request(
+      endpoint,
+      gql`
+        query {
+          humans {
+            name
+            appearsIn
+            id
+            homePlanet
+            friends {
+              name
+            }
+          }
+        }
+      `
+      );
+    return humans;
+  });
+  // return {
+  //   status: 'success',
+  //   data: [
+  //     {
+  //       name: 'Luke',
+  //       appearsIn: ['NEWHOPE', 'EMPIRE', 'JEDI'],
+  //       id: '1',
+  //       homePlanet: 'Tatooine',
+  //       friends: [
+  //         {
+  //           name: 'R2-D2',
+  //         },
+  //         {
+  //           name: 'C-3PO',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: 'Vader',
+  //       appearsIn: ['NEWHOPE', 'EMPIRE', 'JEDI'],
+  //       id: '2',
+  //       homePlanet: 'Tatooine',
+  //       friends: [],
+  //     },
+  //   ],
+  //   error: null,
+  //   isFetching: false
+  // };
 }
 
 const Humans = () => {
@@ -107,6 +108,9 @@ const Humans = () => {
         ) : (
           <>
             <div style={{ height: 400, width: '100%' }}>
+              <Button variant="contained" color="secondary">
+                New human
+              </Button>
               <DataGrid
                 rows={data}
                 columns={columns}
