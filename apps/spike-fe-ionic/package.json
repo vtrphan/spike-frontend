@@ -1,0 +1,6 @@
+{
+  "name": "spike-fe-ionic",
+  "devDependencies": {
+    "@capacitor/cli": "^2.4.5"
+  }
+}

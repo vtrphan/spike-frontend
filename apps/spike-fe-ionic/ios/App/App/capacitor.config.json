@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "spike-fe-ionic",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "../../dist/apps/spike-fe-ionic",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

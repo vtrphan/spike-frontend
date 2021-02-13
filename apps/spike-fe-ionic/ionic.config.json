@@ -1,0 +1,7 @@
+{
+  "name": "spike-fe-ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

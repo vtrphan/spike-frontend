@@ -20,6 +20,12 @@
     "spike-frontend-e2e": {
       "tags": [],
       "implicitDependencies": ["spike-frontend"]
-    }
+    },
+    "spike-fe-ionic": { "tags": [] },
+    "spike-fe-ionic-e2e": {
+      "tags": [],
+      "implicitDependencies": ["spike-fe-ionic"]
+    },
+    "ui": { "tags": [] }
   }
 }
