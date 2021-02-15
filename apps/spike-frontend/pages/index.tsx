@@ -97,68 +97,68 @@ const StyledList = styled.ul`
 `;
 
 function useHumans() {
-  // return useQuery('humans', async () => {
-  //   const {
-  //     humans,
-  //   } = await request(
-  //     endpoint,
-  //     gql`
-  //       query {
-  //         humans {
-  //           name
-  //           appearsIn
-  //           id
-  //           homePlanet
-  //           friends {
-  //             name
-  //           }
-  //         }
-  //       }
-  //     `
-  //     );
-  //   return humans;
-  // });
-  return {
-    status: 'success',
-    data: mockHumans,
-    error: null,
-    isFetching: false,
-  };
+  return useQuery('humans', async () => {
+    const {
+      humans,
+    } = await request(
+      endpoint,
+      gql`
+        query {
+          humans {
+            name
+            appearsIn
+            id
+            homePlanet
+            friends {
+              name
+            }
+          }
+        }
+      `
+      );
+    return humans;
+  });
+  // return {
+  //   status: 'success',
+  //   data: mockHumans,
+  //   error: null,
+  //   isFetching: false,
+  // };
 }
 
 function useDroid(droidId: string) {
-  // return useQuery(
-  //   ['droid', droidId],
-  //   async () => {
-  //     const { droid } = await request(
-  //       endpoint,
-  //       gql`
-  //       query {
-  //         droid(id: ${droidId}) {
-  //           id
-  //           name
-  //           primaryFunction
-  //           friends {
-  //             name
-  //           }
-  //           appearsIn
-  //         }
-  //       }
-  //       `
-  //     );
+  return useQuery(
+    ['droid', droidId],
+    async () => {
+      const { droid } = await request(
+        endpoint,
+        gql`
+        query {
+          droid(id: ${droidId}) {
+            id
+            name
+            primaryFunction
+            friends {
+              name
+            }
+            appearsIn
+          }
+        }
+        `
+      );
 
-  //     return droid;
-  //   },
-  //   {
-  //     enabled: !!droidId,
-  //   }
-  // );
-  return {
-    status: 'success',
-    data: mockDroids.find(droid => droid.id === droidId),
-    error: null,
-    isFetching: false,
-  };
+      return droid;
+    },
+    {
+      enabled: !!droidId,
+    }
+  );
+  // return {
+  //   status: 'success',
+  //   data: mockDroids.find(droid => droid.id === droidId),
+  //   error: null,
+  //   isFetching: false,
+  // };
 }
 
 function useHuman(humanId: string) {
