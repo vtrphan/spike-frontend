@@ -110,6 +110,7 @@ function useHumans() {
             id
             homePlanet
             friends {
+              id
               name
             }
           }
@@ -134,11 +135,12 @@ function useDroid(droidId: string) {
         endpoint,
         gql`
         query {
-          droid(id: ${droidId}) {
+          droid(id: "${droidId}") {
             id
             name
             primaryFunction
             friends {
+              id
               name
             }
             appearsIn
@@ -194,29 +196,34 @@ function useHuman(humanId: string) {
 const useCreateHuman = () => {
   const queryClient = useQueryClient();
   const createHuman = (formData) => {
-    return request(
-      endpoint,
-      gql`
-        mutation {
-          createHuman(human: formData) {
+    const mQuery = gql`
+      mutation CreateHuman($input: HumanInput!) {
+        createHuman(human: $input) {
+          id
+          name
+          homePlanet
+          friends {
             id
             name
-            homePlanet
-            friends {
-              id
-              name
-            }
-            appearsIn
           }
+          appearsIn
         }
-        `
-    )
+      }
+    `;
+    return request(
+      endpoint,
+      mQuery,
+      {
+        input: formData
+      }
+    );
   };
 
   return useMutation(createHuman, {
     // Notice the second argument is the variables object that the `mutate` function receives
     onSuccess: (data, variables) => {
-      queryClient.setQueryData(['humans', { id: variables.id }], data);
+      console.log('ON SUCCESS CALLBACK DATA & VARIABLES', data, variables);
+      queryClient.invalidateQueries('humans');
     },
   });
 };
@@ -284,6 +291,7 @@ const Humans = ({ setDroidId }) => {
       headerName: 'Appears in',
       width: 200,
       valueFormatter: (params: ValueFormatterParams) => {
+        if (!params.value) return 'n/a';
         return (params.value as string[]).join(', ');
       },
     },
@@ -374,7 +382,7 @@ const Droid = ({ droidId, setDroidId }) => {
 
   return (
     <div>
-      <h1>Droid: {data.name}</h1>
+      <h1>Droid: {data ? data.name : 'loading...'}</h1>
       <div>
         {status === 'loading' ? (
           'Loading...'
